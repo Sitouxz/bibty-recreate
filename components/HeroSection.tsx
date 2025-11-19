@@ -106,7 +106,7 @@ export default function HeroSection() {
           {/* Decorative Elements */}
           <motion.div 
             animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] as const }}
             className="absolute bottom-0 right-0 w-48 h-48 bg-bibty-orange rounded-full opacity-20 blur-3xl -z-10" 
           />
         </motion.div>

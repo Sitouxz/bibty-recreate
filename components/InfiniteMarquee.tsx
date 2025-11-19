@@ -5,13 +5,13 @@ import { motion } from "framer-motion";
 export default function InfiniteMarquee() {
   const marqueeVariants = {
     animate: {
-      x: [0, -1035],
+      x: [0, -1035] as [number, number],
       transition: {
         x: {
           repeat: Infinity,
-          repeatType: "loop",
+          repeatType: "loop" as const,
           duration: 20,
-          ease: "linear",
+          ease: [0, 0, 1, 1] as const, // Linear easing curve
         },
       },
     },

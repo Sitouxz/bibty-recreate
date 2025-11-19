@@ -78,7 +78,7 @@ export default function FeaturedProjects() {
                 <motion.div 
                   className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0"
                   animate={{ x: ["-100%", "100%"] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: [0, 0, 1, 1] as const, repeatDelay: 2 }}
                 />
 
                 {/* Pattern Background */}

@@ -48,7 +48,7 @@ export default function FloatingElements() {
           transition={{
             duration: el.duration,
             repeat: Infinity,
-            ease: "linear",
+            ease: [0, 0, 1, 1] as const,
             delay: el.delay,
           }}
         >
