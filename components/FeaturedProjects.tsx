@@ -5,12 +5,60 @@ import { motion, AnimatePresence } from "framer-motion";
 import BathroomGallery from "./BathroomGallery";
 
 const PROJECTS = [
-  { id: 1, title: "Serangoon North", category: "HDB 4-Room", imageColor: "from-blue-100 to-blue-200", pattern: "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.5), transparent)" },
-  { id: 2, title: "Marine Parade", category: "Condo", imageColor: "from-purple-100 to-purple-200", pattern: "linear-gradient(45deg, rgba(255,255,255,0.5) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.5) 75%, transparent 75%, transparent)" },
-  { id: 3, title: "Punggol Waterway", category: "HDB 5-Room", imageColor: "from-green-100 to-green-200", pattern: "repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,255,255,0.2) 20px, rgba(255,255,255,0.2) 40px)" },
-  { id: 4, title: "Joo Chiat Place", category: "Landed", imageColor: "from-orange-100 to-orange-200", pattern: "radial-gradient(circle, rgba(255,255,255,0.3) 2px, transparent 2.5px)" },
-  { id: 5, title: "Tiong Bahru", category: "HDB 3-Room", imageColor: "from-yellow-100 to-yellow-200", pattern: "conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.5) 0%, transparent 50%, rgba(255,255,255,0.5) 100%)" },
-  { id: 6, title: "Orchard Blvd", category: "Luxury Condo", imageColor: "from-pink-100 to-pink-200", pattern: "linear-gradient(135deg,  rgba(255,255,255,0.4) 25%, transparent 25%)" },
+  { 
+    id: 1, 
+    title: "Serangoon North", 
+    category: "HDB 4-Room", 
+    image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80",
+    imageColor: "from-blue-100 to-blue-200", 
+    features: ["Walk-in Shower", "Smart Storage", "Modern Fixtures"],
+    year: "2024"
+  },
+  { 
+    id: 2, 
+    title: "Marine Parade", 
+    category: "Condo", 
+    image: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=800&q=80",
+    imageColor: "from-purple-100 to-purple-200", 
+    features: ["Marble Tiles", "Rain Shower", "Floating Vanity"],
+    year: "2024"
+  },
+  { 
+    id: 3, 
+    title: "Punggol Waterway", 
+    category: "HDB 5-Room", 
+    image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800&q=80",
+    imageColor: "from-green-100 to-green-200", 
+    features: ["Dual Sink", "Custom Carpentry", "LED Lighting"],
+    year: "2023"
+  },
+  { 
+    id: 4, 
+    title: "Joo Chiat Place", 
+    category: "Landed", 
+    image: "https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=800&q=80",
+    imageColor: "from-orange-100 to-orange-200", 
+    features: ["Spa Bathtub", "Premium Finishes", "Smart Mirror"],
+    year: "2023"
+  },
+  { 
+    id: 5, 
+    title: "Tiong Bahru", 
+    category: "HDB 3-Room", 
+    image: "https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?w=800&q=80",
+    imageColor: "from-yellow-100 to-yellow-200", 
+    features: ["Compact Design", "Glass Partition", "Built-in Shelves"],
+    year: "2024"
+  },
+  { 
+    id: 6, 
+    title: "Orchard Blvd", 
+    category: "Luxury Condo", 
+    image: "https://images.unsplash.com/photo-1564540583246-934409427776?w=800&q=80",
+    imageColor: "from-pink-100 to-pink-200", 
+    features: ["Italian Tiles", "Statement Lighting", "His & Hers Vanity"],
+    year: "2023"
+  },
 ];
 
 const CATEGORIES = ["All", "HDB 4-Room", "HDB 5-Room", "Condo", "Landed"];
@@ -72,7 +120,14 @@ export default function FeaturedProjects() {
               onClick={() => setSelectedProject(project.id)}
               className="group cursor-pointer"
             >
-              <div className={`relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br ${project.imageColor} mb-4 shadow-lg group-hover:shadow-2xl transition-all duration-500`}>
+              <div className={`relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 shadow-lg group-hover:shadow-2xl transition-all duration-500`}>
+                
+                {/* Actual Bathroom Image */}
+                <img 
+                  src={project.image} 
+                  alt={`${project.title} - ${project.category}`}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
                 
                 {/* Moving Gradient Overlay */}
                 <motion.div 
@@ -81,25 +136,36 @@ export default function FeaturedProjects() {
                   transition={{ duration: 3, repeat: Infinity, ease: [0, 0, 1, 1] as const, repeatDelay: 2 }}
                 />
 
-                {/* Pattern Background */}
-                <div 
-                    className="absolute inset-0 opacity-40"
-                    style={{ backgroundImage: project.pattern, backgroundSize: '20px 20px' }} 
-                />
+                {/* Dark overlay for readability */}
+                <div className="absolute inset-0 bg-black/20" />
 
                 {/* Animated Circle on Hover */}
                  <motion.div 
-                    className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20"
+                    className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30"
                     transition={{ duration: 0.3 }}
                  />
 
-                {/* Image Placeholder */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-bibty-charcoal/30 font-display group-hover:scale-110 transition-transform duration-500">
-                  <span className="text-5xl font-bold opacity-20">0{project.id}</span>
-                  <span className="text-xl font-bold opacity-40 uppercase tracking-widest mt-2">Before / After</span>
+                {/* Project Info Overlay */}
+                <div className="absolute inset-0 flex flex-col items-center justify-between text-white font-display transition-all duration-500 p-6">
+                  <div className="text-center opacity-90 group-hover:opacity-0 transition-opacity duration-300">
+                    <span className="text-4xl font-bold mb-2 block drop-shadow-lg">0{project.id}</span>
+                    <span className="text-sm font-bold uppercase tracking-widest drop-shadow-lg">Before / After</span>
+                  </div>
+                  
+                  {/* Feature Tags - Show on hover */}
+                  <div className="flex flex-wrap gap-2 justify-center mt-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                    {project.features.map((feature, idx) => (
+                      <span key={idx} className="text-xs px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full font-semibold text-bibty-charcoal">
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {/* Year Badge */}
+                  <div className="text-sm font-bold opacity-0 group-hover:opacity-90 transition-opacity duration-300 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">{project.year}</div>
                 </div>
                 
-                {/* Overlay */}
+                {/* Bottom Overlay - Call to Action */}
                 <div className="absolute inset-0 bg-gradient-to-t from-bibty-charcoal/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <p className="text-white font-bold flex items-center gap-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     View Transformation <span>→</span>

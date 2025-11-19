@@ -44,7 +44,7 @@ export const SERVICES = [
     title: "Project Management",
     description: "Stress-free execution from demo to handover.",
     icon: "📋",
-    color: "bg-white",
+    color: "bg-gray-100",
     textColor: "text-bibty-charcoal",
   },
 ];

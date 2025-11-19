@@ -5,7 +5,8 @@ import { Environment, Float, PerspectiveCamera, ContactShadows } from "@react-th
 import { useRef } from "react";
 import { Mesh } from "three";
 
-function FloatingTile({ position, color, rotation }: { position: [number, number, number]; color: string; rotation?: [number, number, number] }) {
+// Bathroom Tile - Square tile sample
+function BathroomTile({ position, color, rotation }: { position: [number, number, number]; color: string; rotation?: [number, number, number] }) {
   const meshRef = useRef<Mesh>(null);
 
   useFrame((state) => {
@@ -18,10 +19,34 @@ function FloatingTile({ position, color, rotation }: { position: [number, number
   return (
     <Float speed={2} rotationIntensity={1} floatIntensity={1}>
       <mesh ref={meshRef} position={position} rotation={rotation} castShadow receiveShadow>
-        <boxGeometry args={[1.5, 1.5, 0.2]} />
+        <boxGeometry args={[1.2, 1.2, 0.15]} />
         <meshStandardMaterial 
             color={color} 
-            roughness={0.1} 
+            roughness={0.3} 
+            metalness={0.6} 
+        />
+      </mesh>
+    </Float>
+  );
+}
+
+// Paint Swatch - Thin rectangular card
+function PaintSwatch({ position, color, rotation }: { position: [number, number, number]; color: string; rotation?: [number, number, number] }) {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.2;
+    }
+  });
+
+  return (
+    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={2}>
+      <mesh ref={meshRef} position={position} rotation={rotation} castShadow receiveShadow>
+        <boxGeometry args={[0.8, 1.2, 0.05]} />
+        <meshStandardMaterial 
+            color={color} 
+            roughness={0.2} 
             metalness={0.1} 
         />
       </mesh>
@@ -54,18 +79,20 @@ export default function Scene3D() {
         <pointLight position={[-10, -10, -10]} intensity={1} />
         
         <group position={[0, 0, 0]}>
-            <FloatingTile position={[-2, 1, 0]} color="#F4A261" rotation={[0.5, 0.5, 0]} />
-            <FloatingTile position={[2, -1, -1]} color="#2A9D8F" rotation={[-0.5, 0.5, 0]} />
-            <FloatingTile position={[0, 0, 1]} color="#E9C46A" rotation={[0, 0, 0.2]} />
+            {/* Bathroom Tiles in brand colors */}
+            <BathroomTile position={[-2, 1, 0]} color="#F4A261" rotation={[0.5, 0.5, 0]} />
+            <BathroomTile position={[2, -1, -1]} color="#2A9D8F" rotation={[-0.5, 0.5, 0]} />
+            <BathroomTile position={[0, 0, 1]} color="#E9C46A" rotation={[0, 0, 0.2]} />
+            <BathroomTile position={[-1, -3, 1]} color="#111827" rotation={[0.1, 0.1, 0]} />
             
+            {/* Paint Swatches */}
+            <PaintSwatch position={[-3, 3, -3]} color="#CCFF00" rotation={[0.2, 0.5, 0]} />
+            <PaintSwatch position={[3, -3, -2]} color="#5B21B6" rotation={[0.3, -0.5, 0]} />
+            <PaintSwatch position={[0, 3, -4]} color="#FF5F1F" rotation={[0.4, 0.2, 0]} />
+            
+            {/* Decorative spheres (like light fixtures/knobs) */}
             <FloatingSphere position={[2, 2, -2]} color="#ffffff" scale={0.8} />
             <FloatingSphere position={[-2, -2, -2]} color="#264653" scale={1.2} />
-
-            {/* Extra Crowded Elements */}
-            <FloatingSphere position={[-3, 3, -3]} color="#CCFF00" scale={0.5} />
-            <FloatingTile position={[3, -3, -2]} color="#5B21B6" rotation={[0.2, 0.2, 0]} />
-            <FloatingSphere position={[0, 3, -4]} color="#FF5F1F" scale={0.6} />
-            <FloatingTile position={[-1, -3, 1]} color="#111827" rotation={[0.1, 0.1, 0]} />
         </group>
 
         <ContactShadows position={[0, -4, 0]} opacity={0.4} scale={20} blur={2.5} far={4.5} />

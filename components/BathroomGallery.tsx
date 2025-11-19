@@ -2,17 +2,48 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-// Placeholder for gallery items
+// Gallery items with real bathroom images
 const GALLERY_ITEMS = [
-  { id: 1, title: "Modern Minimalist", type: "HDB 4-Room", before: "/placeholder-before.jpg", after: "/placeholder-after.jpg", desc: "Converted a dark utility space into a bright, airy sanctuary." },
-  { id: 2, title: "Industrial Chic", type: "Condo", before: "/placeholder-before.jpg", after: "/placeholder-after.jpg", desc: "Exposed pipes and concrete textures meet warm wood tones." },
-  { id: 3, title: "Luxe Marble", type: "Landed", before: "/placeholder-before.jpg", after: "/placeholder-after.jpg", desc: "Floor-to-ceiling marble tiles with gold accents for ultimate luxury." },
+  { 
+    id: 1, 
+    title: "Modern Minimalist", 
+    type: "HDB 4-Room", 
+    before: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80", 
+    after: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80", 
+    desc: "Converted a dark utility space into a bright, airy sanctuary.",
+    challenge: "Small footprint, lack of natural light.",
+    solution: "Mirrored cabinets, light color palette, glass partitions."
+  },
+  { 
+    id: 2, 
+    title: "Industrial Chic", 
+    type: "Condo", 
+    before: "https://images.unsplash.com/photo-1585128720796-b5e2ba878f71?w=800&q=80", 
+    after: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=800&q=80", 
+    desc: "Exposed pipes and concrete textures meet warm wood tones.",
+    challenge: "Outdated fixtures and dull concrete finish.",
+    solution: "Black matte fixtures, wood accents, statement lighting."
+  },
+  { 
+    id: 3, 
+    title: "Luxe Marble", 
+    type: "Landed", 
+    before: "https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800&q=80", 
+    after: "https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=800&q=80", 
+    desc: "Floor-to-ceiling marble tiles with gold accents for ultimate luxury.",
+    challenge: "Large space lacking character and warmth.",
+    solution: "Italian marble, brass fixtures, heated flooring."
+  },
 ];
 
 export default function BathroomGallery({ isOpen, onClose, initialSlide = 0 }: { isOpen: boolean; onClose: () => void; initialSlide?: number }) {
   const [currentSlide, setCurrentSlide] = useState(initialSlide);
+
+  useEffect(() => {
+    setCurrentSlide(initialSlide);
+  }, [initialSlide, isOpen]);
 
   if (!isOpen) return null;
 
@@ -33,10 +64,24 @@ export default function BathroomGallery({ isOpen, onClose, initialSlide = 0 }: {
           </button>
 
           <div className="w-full max-w-5xl grid md:grid-cols-2 gap-8 items-center">
-            {/* Image Area (Slider Placeholder) */}
-            <div className="relative aspect-[4/5] md:aspect-square bg-gray-800 rounded-2xl overflow-hidden shadow-2xl border border-gray-700">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-gray-500 font-display text-2xl">AFTER IMAGE {currentSlide + 1}</p>
+            {/* Image Area (Before/After Slider) */}
+            <motion.div 
+              key={currentSlide}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="relative aspect-[4/5] md:aspect-square bg-gray-800 rounded-2xl overflow-hidden shadow-2xl border border-gray-700"
+            >
+              {/* After Image */}
+              <img 
+                src={GALLERY_ITEMS[currentSlide].after}
+                alt={`${GALLERY_ITEMS[currentSlide].title} - After`}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              
+              {/* Label */}
+              <div className="absolute top-4 left-4 bg-bibty-lime text-bibty-charcoal px-3 py-1 rounded-full text-xs font-bold uppercase">
+                After
               </div>
               
               {/* Navigation Buttons */}
@@ -48,7 +93,7 @@ export default function BathroomGallery({ isOpen, onClose, initialSlide = 0 }: {
                   <ArrowRight size={20} />
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Content Area */}
             <div className="text-white">
@@ -71,11 +116,11 @@ export default function BathroomGallery({ isOpen, onClose, initialSlide = 0 }: {
                 <div className="space-y-4">
                   <div className="bg-white/5 p-4 rounded-lg border border-white/10">
                     <h4 className="text-bibty-lime font-bold uppercase text-xs mb-1">The Challenge</h4>
-                    <p className="text-sm text-gray-400">Small footprint, lack of natural light.</p>
+                    <p className="text-sm text-gray-400">{GALLERY_ITEMS[currentSlide].challenge}</p>
                   </div>
                   <div className="bg-white/5 p-4 rounded-lg border border-white/10">
                     <h4 className="text-bibty-lime font-bold uppercase text-xs mb-1">The Solution</h4>
-                    <p className="text-sm text-gray-400">Mirrored cabinets, light color palette, glass partitions.</p>
+                    <p className="text-sm text-gray-400">{GALLERY_ITEMS[currentSlide].solution}</p>
                   </div>
                 </div>
               </motion.div>
