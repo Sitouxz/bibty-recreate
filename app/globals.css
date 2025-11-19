@@ -1,15 +1,6 @@
-@import "tailwindcss";
-
-@theme {
-  --color-bibty-orange: #FF5F1F;
-  --color-bibty-purple: #5B21B6;
-  --color-bibty-lime: #CCFF00;
-  --color-bibty-cream: #FDFBF7;
-  --color-bibty-charcoal: #111827;
-  
-  --font-display: var(--font-oswald), sans-serif;
-  --font-sans: var(--font-inter), sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   html {
